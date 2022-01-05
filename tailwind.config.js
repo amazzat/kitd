@@ -8,7 +8,6 @@ module.exports = {
   },
   plugins: [
     require("@tailwindcss/forms"),
-    process.env.NODE_ENV === "development" &&
-      require("tailwindcss-debug-screens"),
+    require("tailwindcss-debug-screens"),
   ],
 };

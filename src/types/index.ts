@@ -8,6 +8,6 @@ type Word = {
   def_kaz: string;
 };
 
-type Dictionary = Word[];
+type WordList = Word[];
 
-export type { Dictionary };
+export type { WordList };
