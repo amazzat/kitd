@@ -18,6 +18,10 @@ class MyDocument extends Document {
         <Head>
           <meta name="title" content="Kazakh IT Dictionary" />
           <meta
+            name="google-site-verification"
+            content="AegcTECM4DndXPliigFwH2KSaVjK7tM-b-8bQLiQl9w"
+          />
+          <meta
             name="description"
             content="Definitions of Information Technology terms in English, Russian and Kazakh languages"
           />
