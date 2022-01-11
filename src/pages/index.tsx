@@ -25,7 +25,7 @@ const Home: NextPage<PageProps> = ({ wordList, message }) => {
   };
 
   return (
-    <div className="min-h-screen debug-screens">
+    <div className="min-h-screen">
       <Header />
       <main className="max-w-5xl p-6 mx-auto my-18 sm:my-36">
         <h1 className="mb-1 text-xl font-bold sm:mb-2 sm:text-4xl">
