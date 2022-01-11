@@ -11,6 +11,8 @@
   - [ ] Suspense in search
   - [ ] Use `swr`
   - [ ] `Sentry` error tracking
+  - [ ] Reduce `fcp`
+  - [ ] Implement static site generation for `index` page
 - [ ] Connect to sheets database
   - [ ] Automatic sheets backup or cache layer
 - [ ] Create api:

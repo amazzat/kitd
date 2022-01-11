@@ -43,7 +43,7 @@ const Home: NextPage<PageProps> = ({ wordList, message }) => {
           <Search handleQuerySubmit={handleQuerySubmit} />
         </div>
         <small className="text-sm sm:text-md">
-          <span className="text-[#C9CDD3] mr-2">Try:</span>
+          <span className="mr-2">Try:</span>
           <Link href="/?search=api" passHref>
             <a href="replaced" aria-label="Try word API" className="underline">
               API
