@@ -1,7 +1,7 @@
 ### TODO:
 
 - [ ] Develop frontend
-  - [ ] Minimalist, modern design
+  - [x] Minimalist, modern design
   - [ ] Contribution form and process (validation and automatic insertion)
   - [ ] Contributors list
   - [ ] Wiki
