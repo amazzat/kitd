@@ -6,6 +6,7 @@ import { WordList } from "types";
 import type { GetServerSideProps, NextPage } from "next";
 import { useRouter } from "next/router";
 import { server } from "utils/server";
+import Head from "next/head";
 
 type ServerProps = {
   wordList?: WordList;
@@ -26,6 +27,10 @@ const Home: NextPage<PageProps> = ({ wordList, message }) => {
 
   return (
     <div className="min-h-screen">
+      <Head>
+        <title>Kazakh IT Dictionary</title>
+        <meta property="og:title" content="Kazakh IT Dictionary" key="title" />
+      </Head>
       <Header />
       <main className="max-w-5xl p-6 mx-auto my-18 sm:my-36">
         <h1 className="mb-1 text-xl font-bold sm:mb-2 sm:text-4xl">
@@ -35,7 +40,7 @@ const Home: NextPage<PageProps> = ({ wordList, message }) => {
           in English, Russian and Kazakh languages
         </p>
         <div className="mb-2 sm:mb-4">
-          <Search defaultQuery={""} handleQuerySubmit={handleQuerySubmit} />
+          <Search handleQuerySubmit={handleQuerySubmit} />
         </div>
         <small className="text-sm sm:text-md">
           <span className="text-[#C9CDD3] mr-2">Try:</span>

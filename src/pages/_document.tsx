@@ -16,6 +16,21 @@ class MyDocument extends Document {
     return (
       <Html lang="en">
         <Head>
+          <meta name="title" content="Kazakh IT Dictionary" />
+          <meta
+            name="description"
+            content="Definitions of Information Technology terms in English, Russian and Kazakh languages"
+          />
+          <meta
+            name="keywords"
+            content="dictionary,kazakh,it,IT,wordlist,information technology, computer science"
+          />
+          <meta name="robots" content="index, follow" />
+          <meta httpEquiv="Content-Type" content="text/html; charset=utf-8" />
+          <meta name="language" content="English" />
+          <meta name="revisit-after" content="1 days" />
+          <meta name="author" content="Zulpykhar Azamat" />
+
           <link
             rel="apple-touch-icon"
             sizes="180x180"
