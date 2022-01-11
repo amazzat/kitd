@@ -4,10 +4,12 @@ const Header = () => {
   return (
     <header className="flex justify-around items-center py-4 bg-[#2B2F35] text-white font-mono">
       <Link href="/" passHref>
-        <a aria-label="Main page">aiti[sozdik]</a>
+        <a href="replaced" aria-label="Main page">
+          aiti[sozdik]
+        </a>
       </Link>
       <Link href="https://github.com/amazzat" passHref>
-        <a aria-label="Creator's github account">
+        <a href="replaced" aria-label="Creator's github account">
           <span className="hidden sm:inline">created by Azamat Zulpykhar</span>
           <span className="inline sm:hidden">
             <svg

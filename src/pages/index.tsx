@@ -3,18 +3,31 @@ import { Header } from "components/Header";
 import { Search } from "components/Search";
 import Link from "next/link";
 import { WordList } from "types";
-import type { GetStaticProps, NextPage } from "next";
+import type { GetServerSideProps, NextPage } from "next";
+import { useRouter } from "next/router";
+import { server } from "utils/server";
 
-type Props = {
-  wordList: WordList | null;
-  message: string;
+type ServerProps = {
+  wordList?: WordList;
+  message?: string;
 };
 
-const Home: NextPage<Props> = ({ wordList, message }) => {
+type PageProps = ServerProps & {
+  wordList?: WordList;
+  message?: string;
+};
+
+const Home: NextPage<PageProps> = ({ wordList, message }) => {
+  const router = useRouter();
+
+  const handleQuerySubmit = (query: string) => {
+    router.push(`/?search=${query}`);
+  };
+
   return (
     <div className="min-h-screen debug-screens">
       <Header />
-      <main className="max-w-5xl p-6 mx-auto mt-18 sm:mt-36">
+      <main className="max-w-5xl p-6 mx-auto my-18 sm:my-36">
         <h1 className="mb-1 text-xl font-bold sm:mb-2 sm:text-4xl">
           Definitions of Information Technology terms
         </h1>
@@ -22,24 +35,32 @@ const Home: NextPage<Props> = ({ wordList, message }) => {
           in English, Russian and Kazakh languages
         </p>
         <div className="mb-2 sm:mb-4">
-          <Search />
+          <Search defaultQuery={""} handleQuerySubmit={handleQuerySubmit} />
         </div>
         <small className="text-sm sm:text-md">
           <span className="text-[#C9CDD3] mr-2">Try:</span>
-          <Link href="/search?word=api" passHref>
-            <a aria-label="Try word API" className="underline">
+          <Link href="/?search=api" passHref>
+            <a href="replaced" aria-label="Try word API" className="underline">
               API
             </a>
           </Link>
           {" , "}
-          <Link href="/search?word=kubernetes" passHref>
-            <a aria-label="Try word Kubernetes" className="underline">
+          <Link href="/?search=kubernetes" passHref>
+            <a
+              href="replaced"
+              aria-label="Try word Kubernetes"
+              className="underline"
+            >
               Kubernetes
             </a>
           </Link>
           {" , "}
-          <Link href="/search?word=import" passHref>
-            <a aria-label="Try word Import" className="underline">
+          <Link href="/?search=import" passHref>
+            <a
+              href="replaced"
+              aria-label="Try word Import"
+              className="underline"
+            >
               Import
             </a>
           </Link>
@@ -54,16 +75,28 @@ const Home: NextPage<Props> = ({ wordList, message }) => {
   );
 };
 
-export const getStaticProps: GetStaticProps = async () => {
+export const getServerSideProps: GetServerSideProps<ServerProps> = async ({
+  res,
+  query,
+}) => {
+  res.setHeader(
+    "Cache-Control",
+    "public, s-maxage=10, stale-while-revalidate=59"
+  );
+
+  const { search } = query;
   try {
-    const data: Response = await fetch("http://localhost:3000/api/dictionary");
-    const dictionary = await data.json();
+    let data: Response;
+    if (typeof search === "string") {
+      data = await fetch(`${server}/api/search?query=${search}`);
+    } else {
+      data = await fetch(`${server}/api/dictionary`);
+    }
+    let wordList = await data.json();
     return {
-      props: { dictionary },
-      revalidate: 60 * 10, // 10 min revalidation
+      props: { wordList },
     };
   } catch (error) {
-    console.warn(error);
     const message = "Internal server error";
     return {
       props: { message },

@@ -9,6 +9,7 @@
   - [ ] Fuzzy search (fuse.js)
   - [ ] Meta share links
   - [ ] Suspense in search
+  - [ ] Use `swr`
 - [ ] Connect to sheets database
   - [ ] Automatic sheets backup or cache layer
 - [ ] Create api:
