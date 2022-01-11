@@ -13,6 +13,7 @@
   - [ ] `Sentry` error tracking
   - [ ] Reduce `fcp`
   - [ ] Implement static site generation for `index` page
+  - [ ] Add `.vercelignore`
 - [ ] Connect to sheets database
   - [ ] Automatic sheets backup or cache layer
 - [ ] Create api:
