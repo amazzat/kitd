@@ -1,10 +1,11 @@
+import { FC } from "react";
 import { WordList } from "types";
 
 type Props = {
   wordList: WordList | null;
 };
 
-const Dictionary: React.FC<Props> = ({ wordList }) => {
+const Dictionary: FC<Props> = ({ wordList }) => {
   return (
     <ol className="text-[#2B2F35] sm:space-y-9 space-y-5">
       {wordList?.map((word, index, array) => (

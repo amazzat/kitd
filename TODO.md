@@ -5,15 +5,19 @@
   - [ ] Contribution form and process (validation and automatic insertion)
   - [ ] Contributors list
   - [ ] Wiki
-  - [ ] Accessibility
-  - [ ] Fuzzy search (fuse.js)
+  - [x] Accessibility
+  - [x] Fuzzy search (fuse.js)
   - [ ] Meta share links
   - [ ] Suspense in search
   - [ ] Use `swr`
   - [ ] `Sentry` error tracking
-  - [ ] Reduce `fcp`
-  - [ ] Implement static site generation for `index` page
+  - [x] Reduce `fcp`
+  - [x] Implement static site generation for `index` page
   - [ ] Add `.vercelignore`
+  - [ ] Fix search field outline to system default
+  - [ ] Message toaster
+  - [ ] Fuse lazy load in browser
+  - [ ] Pre-index search list
 - [ ] Connect to sheets database
   - [ ] Automatic sheets backup or cache layer
 - [ ] Create api:

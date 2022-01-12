@@ -1,17 +1,13 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { supabase } from "utils/supabaseClient";
 
-export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse<any>
-) {
-  if (supabase) {
-    const { data } = await supabase?.from("dictionary").select();
-    res.status(200);
-    res.json(JSON.stringify(data));
-    res.end();
-  } else {
-    res.status(500);
-    res.end();
-  }
-}
+const dictionaryHandler = async (
+  request: NextApiRequest,
+  response: NextApiResponse
+) => {
+  const { data } = await supabase.from("dictionary").select();
+  response.json(JSON.stringify(data));
+  response.end();
+};
+
+export default dictionaryHandler;
