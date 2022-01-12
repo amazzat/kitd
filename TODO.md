@@ -16,6 +16,8 @@
   - [ ] Add `.vercelignore`
   - [ ] Fix search field outline to system default
   - [ ] Message toaster
+  - [ ] Fuse lazy load in browser
+  - [ ] Pre-index search list
 - [ ] Connect to sheets database
   - [ ] Automatic sheets backup or cache layer
 - [ ] Create api:
