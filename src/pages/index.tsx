@@ -28,9 +28,9 @@ const Home: NextPage<PageProps> = () => {
       try {
         let data: Response;
         if (typeof search === "string") {
-          data = await fetch(`${server}/api/search?query=${search}`);
+          data = await fetch(`/api/search?query=${search}`);
         } else {
-          data = await fetch(`${server}/api/dictionary`);
+          data = await fetch(`/api/dictionary`);
         }
         let wordList = await data.json();
         setWordList(wordList as WordList);
