@@ -7,23 +7,38 @@ import type { GetServerSideProps, NextPage } from "next";
 import { useRouter } from "next/router";
 import { server } from "utils/server";
 import Head from "next/head";
+import { Suspense, useEffect, useState } from "react";
 
-type ServerProps = {
-  wordList?: WordList;
-  message?: string;
-};
+type ServerProps = {};
 
-type PageProps = ServerProps & {
-  wordList?: WordList;
-  message?: string;
-};
+type PageProps = ServerProps & {};
 
-const Home: NextPage<PageProps> = ({ wordList, message }) => {
+const Home: NextPage<PageProps> = () => {
   const router = useRouter();
+  const { search } = router.query;
 
   const handleQuerySubmit = (query: string) => {
     router.push(`/?search=${query}`);
   };
+
+  const [wordList, setWordList] = useState<WordList | null>(null);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        let data: Response;
+        if (typeof search === "string") {
+          data = await fetch(`${server}/api/search?query=${search}`);
+        } else {
+          data = await fetch(`${server}/api/dictionary`);
+        }
+        let wordList = await data.json();
+        setWordList(wordList as WordList);
+      } catch (error) {
+        console.error(error);
+      }
+    })();
+  }, [search]);
 
   return (
     <div className="min-h-screen">
@@ -32,7 +47,7 @@ const Home: NextPage<PageProps> = ({ wordList, message }) => {
         <meta property="og:title" content="Kazakh IT Dictionary" key="title" />
       </Head>
       <Header />
-      <main className="max-w-5xl p-6 mx-auto my-18 sm:my-36">
+      <main className="max-w-5xl p-6 mx-auto mt-18 sm:mt-36">
         <h1 className="mb-1 text-xl font-bold sm:mb-2 sm:text-4xl">
           Definitions of Information Technology terms
         </h1>
@@ -70,43 +85,16 @@ const Home: NextPage<PageProps> = ({ wordList, message }) => {
             </a>
           </Link>
         </small>
-        {wordList && (
-          <div className="mt-10 sm:mt-16 ">
+        {wordList ? (
+          <div className="my-10 sm:my-16 ">
             <Dictionary wordList={wordList} />
           </div>
+        ) : (
+          <div className="my-10 text-center sm:my-16">Loading...</div>
         )}
       </main>
     </div>
   );
-};
-
-export const getServerSideProps: GetServerSideProps<ServerProps> = async ({
-  res,
-  query,
-}) => {
-  res.setHeader(
-    "Cache-Control",
-    "public, s-maxage=10, stale-while-revalidate=59"
-  );
-
-  const { search } = query;
-  try {
-    let data: Response;
-    if (typeof search === "string") {
-      data = await fetch(`${server}/api/search?query=${search}`);
-    } else {
-      data = await fetch(`${server}/api/dictionary`);
-    }
-    let wordList = await data.json();
-    return {
-      props: { wordList },
-    };
-  } catch (error) {
-    const message = "Internal server error";
-    return {
-      props: { message },
-    };
-  }
 };
 
 export default Home;
