@@ -1,33 +1,36 @@
-import { NextPage } from "next";
-import { ChangeEvent, FormEvent, useRef, useState } from "react";
+import { ChangeEvent, FC, FormEvent, useRef, useState } from "react";
 
 type Props = {
-  handleQuerySubmit: (query: string) => any;
+  onQuerySubmit?: (query: string) => any;
+  onQueryChange?: (query: string) => any;
   defaultQuery?: string;
 };
 
-const Search: NextPage<Props> = ({ handleQuerySubmit, defaultQuery }) => {
+const Search: FC<Props> = ({ onQueryChange, onQuerySubmit, defaultQuery }) => {
   const [query, setQuery] = useState<string>(defaultQuery || "");
-  const handleQueryChange = (event: ChangeEvent<HTMLInputElement>) =>
-    setQuery(event.target.value);
+
+  const disabled = query.length <= 0;
 
   const inputRef = useRef<HTMLInputElement>(null);
   const blurInput = () => inputRef.current?.blur();
 
-  const onSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const handleQuerySubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     blurInput();
-    handleQuerySubmit(query);
+    onQuerySubmit && onQuerySubmit(query);
   };
 
-  const disabled = query.length <= 0;
+  const handleQueryChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setQuery(event.target.value);
+    onQueryChange && onQueryChange(event.target.value);
+  };
 
   return (
     <div>
       <label htmlFor="search" className="sr-only">
         Search
       </label>
-      <form className="flex" onSubmit={onSubmit}>
+      <form className="flex" onSubmit={handleQuerySubmit}>
         <input
           ref={inputRef}
           type="search"
@@ -36,7 +39,7 @@ const Search: NextPage<Props> = ({ handleQuerySubmit, defaultQuery }) => {
           required
           value={query}
           onChange={handleQueryChange}
-          className="flex-auto px-3 sm:px-6  placeholder:text-[#C9CDD3] text-sm rounded-l sm:text-base"
+          className="flex-auto px-3 sm:px-6 placeholder:text-[#C9CDD3] text-sm rounded-l sm:text-base"
           placeholder="Enter the word"
         />
         <button

@@ -10,4 +10,6 @@ type Word = {
 
 type WordList = Word[];
 
-export type { WordList };
+type SearchResults = WordList | "NOQUERY";
+
+export type { WordList, Word, SearchResults };

@@ -1,29 +1,49 @@
-import { Dictionary } from "components/Dictionary";
-import { Header } from "components/Header";
-import { Search } from "components/Search";
+import { useCallback, useEffect, useRef, useState } from "react";
+import type { GetStaticProps, NextPage } from "next";
 import Link from "next/link";
-import { WordList } from "types";
-import type { GetServerSideProps, NextPage } from "next";
-import { useRouter } from "next/router";
-import { server } from "utils/server";
 import Head from "next/head";
+import Fuse from "fuse.js";
+import { api } from "utils/api";
+import { Header, Search, SearchableWordList } from "components";
+import { SearchResults, Word, WordList } from "types";
 
-type ServerProps = {
-  wordList?: WordList;
-  message?: string;
+type Props = {
+  wordList: WordList | null;
+  message: string | null;
 };
 
-type PageProps = ServerProps & {
-  wordList?: WordList;
-  message?: string;
-};
+const Home: NextPage<Props> = ({ wordList }) => {
+  const fuseRef = useRef<Fuse<Word> | null>(null);
+  const [searchList, setSearchList] = useState<SearchResults>("NOQUERY");
 
-const Home: NextPage<PageProps> = ({ wordList, message }) => {
-  const router = useRouter();
+  const onQueryChange = useCallback(
+    (query: string) => {
+      if (query.length > 0) {
+        if (fuseRef.current) {
+          const results = fuseRef.current.search(query);
+          setSearchList(results.map((result) => result.item));
+        }
+      } else {
+        setSearchList("NOQUERY");
+      }
+    },
+    [fuseRef]
+  );
 
-  const handleQuerySubmit = (query: string) => {
-    router.push(`/?search=${query}`);
-  };
+  useEffect(() => {
+    if (wordList) {
+      fuseRef.current = new Fuse(wordList, {
+        keys: [
+          { name: "title_eng", weight: 2 },
+          { name: "title_rus", weight: 2 },
+          { name: "title_kaz", weight: 2 },
+          { name: "def_eng", weight: 1 },
+          { name: "def_rus", weight: 1 },
+          { name: "def_kaz", weight: 1 },
+        ],
+      });
+    }
+  }, [wordList]);
 
   return (
     <div className="min-h-screen">
@@ -40,7 +60,7 @@ const Home: NextPage<PageProps> = ({ wordList, message }) => {
           in English, Russian and Kazakh languages
         </p>
         <div className="mb-2 sm:mb-4">
-          <Search handleQuerySubmit={handleQuerySubmit} />
+          <Search onQueryChange={onQueryChange} />
         </div>
         <small className="text-sm sm:text-md">
           <span className="mr-2">Try:</span>
@@ -70,41 +90,25 @@ const Home: NextPage<PageProps> = ({ wordList, message }) => {
             </a>
           </Link>
         </small>
-        {wordList && (
-          <div className="mt-10 sm:mt-16 ">
-            <Dictionary wordList={wordList} />
-          </div>
-        )}
+        <div className="mt-10 sm:mt-16">
+          <SearchableWordList wordList={wordList} searchList={searchList} />
+        </div>
       </main>
     </div>
   );
 };
 
-export const getServerSideProps: GetServerSideProps<ServerProps> = async ({
-  res,
-  query,
-}) => {
-  res.setHeader(
-    "Cache-Control",
-    "public, s-maxage=10, stale-while-revalidate=59"
-  );
-
-  const { search } = query;
+export const getStaticProps: GetStaticProps<Props> = async () => {
+  let wordList: WordList | null = null;
+  let message: string | null = null;
   try {
-    let data: Response;
-    if (typeof search === "string") {
-      data = await fetch(`${server}/api/search?query=${search}`);
-    } else {
-      data = await fetch(`${server}/api/dictionary`);
-    }
-    let wordList = await data.json();
-    return {
-      props: { wordList },
-    };
+    wordList = await api<WordList>("dictionary");
   } catch (error) {
-    const message = "Internal server error";
+    message = "Something went wrong";
+  } finally {
     return {
-      props: { message },
+      props: { wordList, message },
+      revalidate: 60 * 10, // revalidate every 10 minutes
     };
   }
 };
