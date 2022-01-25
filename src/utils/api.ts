@@ -1,7 +1,7 @@
 import { NEXT_PUBLIC_SERVER_DOMAIN } from "utils/env";
 
 const dev = process.env.NODE_ENV !== "production";
-const server = dev ? "http://localhost:3000" : NEXT_PUBLIC_SERVER_DOMAIN;
+const server = NEXT_PUBLIC_SERVER_DOMAIN || "http://localhost:3000";
 
 const api = <T>(url: string): Promise<T> => {
   return fetch(`${server}/api/${url}`).then((response) => {
