@@ -50,11 +50,10 @@ const SearchableWordList: FC<Props> = ({ wordList, searchList }) => {
             {
               id: "nothing",
               title_eng: "nothing",
-              title_rus: "ничего",
-              title_kaz: "ештеңе",
-              def_eng: "not anything; no single thing",
-              def_rus: "пустота; вообще ничего",
-              def_kaz: "ештеңе емес; жалғыз нәрсе де жоқ",
+              title_ru: "ничего",
+              title_kz: "ештеңе",
+              def_kz: "ештеңе емес; жалғыз нәрсе де жоқ",
+              link: "",
             },
           ]}
         />

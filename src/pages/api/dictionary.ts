@@ -5,7 +5,7 @@ const dictionaryHandler = async (
   request: NextApiRequest,
   response: NextApiResponse
 ) => {
-  const { data } = await supabase.from("dictionary").select();
+  const { data } = await supabase.from("sozdik").select();
   response.json(JSON.stringify(data));
   response.end();
 };

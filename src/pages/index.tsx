@@ -4,7 +4,7 @@ import Link from "next/link";
 import Head from "next/head";
 import Fuse from "fuse.js";
 import { api } from "utils/api";
-import { Header, Search, SearchableWordList } from "components";
+import { Search, SearchableWordList } from "components";
 import { SearchResults, Word, WordList } from "types";
 
 type Props = {
@@ -35,58 +35,50 @@ const Home: NextPage<Props> = ({ wordList }) => {
       fuseRef.current = new Fuse(wordList, {
         keys: [
           { name: "title_eng", weight: 2 },
-          { name: "title_rus", weight: 2 },
-          { name: "title_kaz", weight: 2 },
-          { name: "def_eng", weight: 1 },
-          { name: "def_rus", weight: 1 },
-          { name: "def_kaz", weight: 1 },
+          { name: "title_ru", weight: 2 },
+          { name: "title_kz", weight: 2 },
+          { name: "def_kz", weight: 2 },
         ],
       });
     }
   }, [wordList]);
 
   return (
-    <div className="min-h-screen">
+    <div>
       <Head>
         <title>Kazakh IT Dictionary</title>
-        <meta property="og:title" content="Kazakh IT Dictionary" key="title" />
       </Head>
-      <Header />
       <main className="max-w-5xl p-6 mx-auto my-18 sm:my-36">
         <h1 className="mb-1 text-xl font-bold sm:mb-2 sm:text-4xl">
-          Definitions of Information Technology terms
+          Ақпараттық технологиялар саласындағы терминдердің анықтамалары
         </h1>
         <p className="text-md sm:text-2xl text-[#3B4149] mb-8 sm:mb-10">
-          in English, Russian and Kazakh languages
+          Ағылшын, орыс және қазақ тілдерінде
         </p>
         <div className="mb-2 sm:mb-4">
           <Search onQueryChange={onQueryChange} />
         </div>
         <small className="text-sm sm:text-md">
           <span className="mr-2">Try:</span>
-          <Link href="/?search=api" passHref>
+          <Link href="#search" passHref>
             <a href="replaced" aria-label="Try word API" className="underline">
               API
             </a>
           </Link>
           {" , "}
-          <Link href="/?search=kubernetes" passHref>
+          <Link href="#search" passHref>
             <a
               href="replaced"
-              aria-label="Try word Kubernetes"
+              aria-label="Try word virus"
               className="underline"
             >
-              Kubernetes
+              Virus
             </a>
           </Link>
           {" , "}
-          <Link href="/?search=import" passHref>
-            <a
-              href="replaced"
-              aria-label="Try word Import"
-              className="underline"
-            >
-              Import
+          <Link href="#search" passHref>
+            <a href="replaced" aria-label="Try word IP" className="underline">
+              IP
             </a>
           </Link>
         </small>
@@ -108,7 +100,6 @@ export const getStaticProps: GetStaticProps<Props> = async () => {
   } finally {
     return {
       props: { wordList, message },
-      revalidate: 60 * 10, // revalidate every 10 minutes
     };
   }
 };

@@ -1,11 +1,10 @@
 type Word = {
   id: string;
   title_eng: string;
-  title_rus: string;
-  title_kaz: string;
-  def_eng: string;
-  def_rus: string;
-  def_kaz: string;
+  title_ru: string;
+  title_kz: string;
+  def_kz: string;
+  link: string;
 };
 
 type WordList = Word[];

@@ -16,6 +16,11 @@ class MyDocument extends Document {
     return (
       <Html lang="en">
         <Head>
+          <meta
+            property="og:title"
+            content="Kazakh IT Dictionary"
+            key="title"
+          />
           <meta name="title" content="Kazakh IT Dictionary" />
           <meta
             name="google-site-verification"

@@ -8,9 +8,9 @@ const Header = () => {
           aiti[sozdik]
         </a>
       </Link>
-      <Link href="https://github.com/amazzat" passHref>
-        <a href="replaced" aria-label="Creator's github account">
-          <span className="hidden sm:inline">created by Azamat Zulpykhar</span>
+      <Link href="/about" passHref>
+        <a href="replaced" aria-label="about">
+          <span className="hidden sm:inline">Сайт туралы</span>
           <span className="inline sm:hidden">
             <svg
               className="w-6 h-6"

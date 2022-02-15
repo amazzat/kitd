@@ -28,7 +28,7 @@ const Search: FC<Props> = ({ onQueryChange, onQuerySubmit, defaultQuery }) => {
   return (
     <div>
       <label htmlFor="search" className="sr-only">
-        Search
+        Іздеу
       </label>
       <form className="flex" onSubmit={handleQuerySubmit}>
         <input
@@ -48,7 +48,7 @@ const Search: FC<Props> = ({ onQueryChange, onQuerySubmit, defaultQuery }) => {
           type="submit"
           className="sm:px-12 disabled:cursor-not-allowed disabled:opacity-80  px-6 sm:py-3 py-2 bg-[#2B2F35] rounded-r text-white hover:opacity-95 transition-opacity duration-75"
         >
-          <span className="hidden sm:inline">Search</span>
+          <span className="hidden sm:inline">Іздеу</span>
           <span className="sm:hidden">
             <svg
               className="w-6 h-6"
