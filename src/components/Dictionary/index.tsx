@@ -11,13 +11,19 @@ const Dictionary: FC<Props> = ({ wordList }) => {
       {wordList?.map((word, index, array) => (
         <li key={word.id} className="space-y-2 sm:space-y-4">
           <div className="text-lg font-medium lowercase sm:text-2xl">
-            {word.title_eng && `${word.title_eng} / `}
-            {word.title_ru && `${word.title_ru} / `}
-            {word.title_kz && `${word.title_kz}`}
+            {word.title_eng}
+            {word.title_eng && word.title_ru && " / "}
+            {word.title_ru}
+            {word.title_kz && word.title_ru && " / "}
+            {word.title_kz}
           </div>
           <div className="text-base sm:text-lg">
-            <span className="mr-1 font-semibold sm:mr-2">🇰🇿 Қазақша:</span>
-            {word.def_kz}
+            {word.def_kz && (
+              <>
+                <span className="mr-1 font-semibold sm:mr-2">🇰🇿 Қазақша:</span>
+                {word.def_kz}
+              </>
+            )}
           </div>
           {index < array.length - 1 && (
             <hr className="border-[#E9EDF2] rounded-sm" />
