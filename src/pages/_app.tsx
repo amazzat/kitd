@@ -6,7 +6,7 @@ const App = ({ Component, pageProps }: AppProps) => {
   return (
     <div className="min-h-screen">
       <Header />
-      <Component {...pageProps} />;
+      <Component {...pageProps} />
     </div>
   );
 };
