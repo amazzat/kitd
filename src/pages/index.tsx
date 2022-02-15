@@ -100,6 +100,7 @@ export const getStaticProps: GetStaticProps<Props> = async () => {
   } finally {
     return {
       props: { wordList, message },
+      revalidate: 1 * 10 * 60,
     };
   }
 };
