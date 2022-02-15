@@ -5,7 +5,10 @@ const dictionaryHandler = async (
   request: NextApiRequest,
   response: NextApiResponse
 ) => {
-  const { data } = await supabase.from("sozdik").select();
+  const { data } = await supabase
+    .from("sozdik")
+    .select()
+    .order("id", { ascending: true });
   response.json(JSON.stringify(data));
   response.end();
 };
